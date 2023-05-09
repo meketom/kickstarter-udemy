@@ -14,4 +14,4 @@ eth-deploy:
 
 .PHONY: dev
 front-dev:
-	node run dev
+	npm run dev
