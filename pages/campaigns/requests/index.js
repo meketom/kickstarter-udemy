@@ -22,7 +22,7 @@ class RequestIndex extends Component {
 
         const approversCount = await campaign.methods.approversCount().call();
 
-        return {address, requests, approversCount}
+        return {address, requests, requestsCount, approversCount}
     }
 
     renderRows() {
@@ -44,7 +44,7 @@ class RequestIndex extends Component {
             <Layout>
                 <Link route='addRequestsCampaign' params={{address: this.props.address}}>
                     <a>
-                        <Button primary>Add Request</Button>
+                        <Button primary floated="right" style={{marginBottom: 10}}>Add Request</Button>
                     </a>
                 </Link>
                 <Table>
@@ -63,6 +63,7 @@ class RequestIndex extends Component {
                         {this.renderRows()}
                     </Body>
                 </Table>
+                <div>Found {this.props.requestsCount} requests.</div>
             </Layout>
         );
     }
