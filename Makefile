@@ -15,3 +15,6 @@ eth-deploy:
 .PHONY: dev
 front-dev:
 	npm run dev
+
+front-deps:
+	npm install --legacy-peer-deps
