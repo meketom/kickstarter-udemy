@@ -3,6 +3,7 @@ import factory from "../ethereum/factory";
 import {Card, Button} from 'semantic-ui-react';
 import Layout from "../components/Layout";
 import Link from 'next/link';
+import Campaign from "../ethereum/campaign";
 
 class CampaignIndex extends Component {
 

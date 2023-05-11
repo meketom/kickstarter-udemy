@@ -9,6 +9,12 @@ import Link from 'next/link';
 function renderCards(campaign) {
     const items = [
         {
+            header: campaign.description,
+            meta: 'Description',
+            description: 'The Campaign\'s goals.',
+            style: {overflowWrap: 'break-word'}
+        },
+        {
             header: campaign.managerAddress,
             meta: 'Address of Manager',
             description: 'The manager created this campaign and can create requests to withdraw money.',
@@ -52,6 +58,7 @@ export async function getServerSideProps(context) {
         requestsCount: campaignResult[2],
         approversCount: campaignResult[3],
         managerAddress: campaignResult[4],
+        description: campaignResult[5],
         campaignAddress: context.query.address
     }
 
