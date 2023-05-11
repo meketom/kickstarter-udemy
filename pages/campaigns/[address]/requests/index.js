@@ -1,9 +1,10 @@
 import React, {Component} from "react";
-import Layout from "../../../components/Layout";
+import Layout from "../../../../components/Layout";
 import {Button, Table} from "semantic-ui-react";
-import {Link} from '../../../routes';
-import Campaign from "../../../ethereum/campaign";
-import RequestRow from "../../../components/RequestRow";
+// import {Link} from '../../../../routes';
+import Campaign from "../../../../ethereum/campaign";
+import RequestRow from "../../../../components/RequestRow";
+import Link from "next/link";
 
 class RequestIndex extends Component {
 
@@ -42,10 +43,8 @@ class RequestIndex extends Component {
 
         return (
             <Layout>
-                <Link route='addRequestsCampaign' params={{address: this.props.address}}>
-                    <a>
-                        <Button primary floated="right" style={{marginBottom: 10}}>Add Request</Button>
-                    </a>
+                <Link href={{pathname: '/campaigns/[address]/requests/new', query: {address: this.props.address}}}>
+                    <Button primary floated="right" style={{marginBottom: 10}}>Add Request</Button>
                 </Link>
                 <Table>
                     <Header>

@@ -1,9 +1,10 @@
 import React, {Component} from "react";
-import Layout from "../../../components/Layout";
+import Layout from "../../../../components/Layout";
 import {Form, Button, Message, Input} from "semantic-ui-react";
-import Campaign from "../../../ethereum/campaign";
-import web3 from "../../../ethereum/web3";
-import {Link, Router} from '../../../routes';
+import Campaign from "../../../../ethereum/campaign";
+import web3 from "../../../../ethereum/web3";
+import Router from 'next/router';
+import Link from "next/link";
 
 class RequestNew extends Component {
 
@@ -38,7 +39,7 @@ class RequestNew extends Component {
                 .send({
                     from: accounts[0]
                 });
-            Router.pushRoute('requestsCampaign', {address: this.props.address});
+            Router.push('/campaigns/' + this.props.address + '/requests');
         } catch (err) {
             this.setState({errorMessage: err.message})
         }
@@ -48,8 +49,8 @@ class RequestNew extends Component {
     render() {
         return (
             <Layout>
-                <Link route="requestsCampaign" params={{address: this.props.address}}>
-                    <a>Back</a>
+                <Link href={{pathname: '/campaigns/[address]/requests', query: {address: this.props.address}}}>
+                    Back
                 </Link>
 
                 <h3>Create a Request</h3>
