@@ -7,19 +7,36 @@ import Campaign from "../ethereum/campaign";
 
 class CampaignIndex extends Component {
 
-    static async getInitialProps() {
-        const campaigns = await factory.methods.getDeployedCampaigns().call();
+    constructor(props) {
+        super(props);
 
-        return {campaigns};
+        this.state = {
+            campaigns: []
+        }
+    }
+
+    async componentDidMount() {
+        const campaignsAddresses = await factory.methods.getDeployedCampaigns().call();
+        const campaignsWithDescription = campaignsAddresses.map(async address => {
+            const campaignDescription = await Campaign(address).methods.description().call();
+
+            return {
+                address: address,
+                description: campaignDescription
+            };
+        })
+        const campaigns = await Promise.all(campaignsWithDescription);
+
+        this.setState({campaigns: campaigns});
     }
 
     renderCampaigns() {
-        const items = this.props.campaigns.map(address => {
-
+        const items = this.state.campaigns.map(campaign => {
+            const address = campaign.address;
             return {
-                header: address,
-                description: (
-                    <Link href={{pathname: '/campaigns/[address]', query: {address: address}}}>View Campaign</Link>),
+                header: campaign.description,
+                description: <Link href={{pathname: '/campaigns/[address]', query: {address}}}>View Campaign</Link>,
+                meta: address,
                 fluid: true
             }
         });
