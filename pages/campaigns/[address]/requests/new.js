@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import Layout from "../../../../components/Layout";
-import {Form, Button, Message, Input} from "semantic-ui-react";
+import {Form, Button, Message, Input, Label} from "semantic-ui-react";
 import Campaign from "../../../../ethereum/campaign";
 import web3 from "../../../../ethereum/web3";
 import Router from 'next/router';
@@ -22,8 +22,12 @@ class RequestNew extends Component {
 
     static async getInitialProps(props) {
         const address = props.query.address;
+        const campaignBalance = await Campaign(address).methods.getSummary().call();
 
-        return {address};
+        return {
+            address,
+            balance: campaignBalance[1]
+        };
     }
 
     onSubmit = async (event) => {
@@ -63,6 +67,7 @@ class RequestNew extends Component {
                     <Form.Field>
                         <label>Value (ether)</label>
                         <Input value={this.state.value} onChange={event => this.setState({value: event.target.value})}/>
+                        <p>Max balance available: {web3.utils.fromWei(this.props.balance, 'ether')} eth</p>
                     </Form.Field>
 
                     <Form.Field>
